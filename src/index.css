@@ -1,0 +1,234 @@
+:root {
+  --sky-top: #6aa6d6;
+  --sky-bottom: #0a4650;
+  --teal: #00606c;
+  --teal-dark: #063e46;
+  --teal-deep: #032329;
+  --navy: #283c50;
+  --gray: #b4bebe;
+  --white: #ffffff;
+
+  --text: var(--white);
+  --text-muted: rgba(255, 255, 255, 0.72);
+
+  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--text);
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.page {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  /* gradiente do céu da logo: azul no topo até o teal profundo, como no horizonte da arte */
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    #3f8aa0 35%,
+    var(--teal) 65%,
+    var(--sky-bottom) 100%
+  );
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px 0;
+}
+
+.header__logo {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px 64px;
+}
+
+.hero__content {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffdede;
+  margin-bottom: 12px;
+}
+
+.hero__eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff5a5a;
+  box-shadow: 0 0 0 4px rgba(255, 90, 90, 0.25);
+}
+
+.hero__title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.hero__subtitle {
+  margin: 0 0 32px;
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+.card {
+  width: 100%;
+  /* segundo gradiente da logo: o anel teal, do mais claro ao mais escuro */
+  background: linear-gradient(160deg, var(--teal) 0%, var(--teal-dark) 55%, var(--teal-deep) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.player__play {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  background: var(--white);
+  color: var(--teal-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.player__play:hover {
+  transform: scale(1.05);
+}
+
+.player__play.is-playing {
+  background: var(--gray);
+}
+
+.player__spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(3, 35, 41, 0.25);
+  border-top-color: var(--teal-deep);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.player__volume {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player__mute {
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.player__volume input[type='range'] {
+  flex: 1;
+  accent-color: var(--white);
+  cursor: pointer;
+}
+
+.player__error {
+  grid-column: 1 / -1;
+  color: #ffd3d3;
+  font-size: 13px;
+  margin: 0;
+}
+
+.now-playing {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 16px;
+}
+
+.now-playing__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.now-playing__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.footer p {
+  margin: 0;
+}
