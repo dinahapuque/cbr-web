@@ -19,6 +19,32 @@ export function Player() {
     audio.muted = muted;
   }, [volume, muted, status]);
 
+  // Autoplay ao abrir o site. Navegadores só permitem tocar áudio com som
+  // sem interação prévia do usuário se a política de autoplay permitir; caso
+  // contrário, tentamos com o som mudo (quase sempre permitido) e o ouvinte
+  // ativa o som com um clique no botão de volume.
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    setStatus('loading');
+    audio.load();
+    audio.volume = volume;
+    audio.muted = false;
+    audio
+      .play()
+      .then(() => setStatus('playing'))
+      .catch(() => {
+        audio.muted = true;
+        setMuted(true);
+        audio
+          .play()
+          .then(() => setStatus('playing'))
+          .catch(() => setStatus('idle'));
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const toggle = () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -64,26 +90,27 @@ export function Player() {
         <source src={STREAM_URL} />
       </audio>
 
-      <button
-        className={`player__play ${status === 'playing' ? 'is-playing' : ''}`}
-        onClick={toggle}
-        aria-label={status === 'playing' ? 'Pausar' : 'Tocar'}
-      >
-        {status === 'loading' ? (
-          <span className="player__spinner" aria-hidden />
-        ) : status === 'playing' ? (
-          <PauseIcon />
-        ) : (
-          <PlayIcon />
-        )}
-      </button>
-
-      <div className="player__volume">
+      <div className="player__row">
         <button
-          className="player__mute"
-          onClick={toggleMute}
-          aria-label={muted ? 'Ativar som' : 'Silenciar'}
+          className={`player__play ${status === 'playing' ? 'is-playing' : ''}`}
+          onClick={toggle}
+          aria-label={status === 'playing' ? 'Pausar' : 'Tocar'}
         >
+          {status === 'loading' ? (
+            <span className="player__spinner" aria-hidden />
+          ) : status === 'playing' ? (
+            <PauseIcon />
+          ) : (
+            <PlayIcon />
+          )}
+        </button>
+
+        <div className="player__volume">
+          <button
+            className="player__mute"
+            onClick={toggleMute}
+            aria-label={muted ? 'Ativar som' : 'Silenciar'}
+          >
           {muted || volume === 0 ? <MuteIcon /> : <VolumeIcon />}
         </button>
         <input
@@ -92,15 +119,20 @@ export function Player() {
           max={1}
           step={0.01}
           value={muted ? 0 : volume}
-          onChange={(e) => handleVolume(Number(e.target.value))}
-          aria-label="Volume"
-        />
+            onChange={(e) => handleVolume(Number(e.target.value))}
+            aria-label="Volume"
+          />
+        </div>
       </div>
 
       {status === 'error' && (
         <p className="player__error">
           Não foi possível conectar ao stream. Tente novamente em instantes.
         </p>
+      )}
+
+      {status === 'playing' && muted && (
+        <p className="player__hint">🔇 Toque no ícone de volume para ativar o som</p>
       )}
     </div>
   );

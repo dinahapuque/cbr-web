@@ -124,6 +124,12 @@ body {
 
 .player {
   display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.player__row {
+  display: flex;
   align-items: center;
   gap: 20px;
 }
@@ -188,6 +194,13 @@ body {
   flex: 1;
   accent-color: var(--white);
   cursor: pointer;
+}
+
+.player__hint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
 }
 
 .player__error {
