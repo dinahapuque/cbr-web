@@ -1,7 +1,7 @@
 export function Anuncie() {
   return (
-    <div className="card page-card">
-      <h2 className="page-card__title">Anuncie na CBR</h2>
+    <div className="page-section">
+      <h2 className="page-section__title">Anuncie na CBR</h2>
       <p>Quer anunciar sua empresa ou ministério na Rádio CBR? Fale com a gente:</p>
 
       <div className="contact-list">

@@ -1,7 +1,7 @@
 export function Sobre() {
   return (
-    <div className="card page-card">
-      <h2 className="page-card__title">Sobre a Rádio CBR</h2>
+    <div className="page-section">
+      <h2 className="page-section__title">Sobre a Rádio CBR</h2>
       <p>
         A Rádio CBR Esperança é a rádio da Igreja Conservadora Batista Regular,
         no ar para sintonizar e direcionar as afeições dos ouvintes a Deus.

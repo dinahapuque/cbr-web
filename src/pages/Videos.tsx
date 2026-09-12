@@ -2,8 +2,8 @@ const VIDEO_IDS = ['TOxEHfjGZC8', 'xzeRODg3qOg', 'yMaEFDy0-bw', 'yY3SrQoiAo4'];
 
 export function Videos() {
   return (
-    <div className="card page-card">
-      <h2 className="page-card__title">Vídeos</h2>
+    <div className="page-section">
+      <h2 className="page-section__title">Vídeos</h2>
       <div className="video-grid">
         {VIDEO_IDS.map((id) => (
           <div className="video-grid__item" key={id}>
